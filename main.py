@@ -27,12 +27,12 @@ def convert_pdf():
         # Xuất các định dạng
         markdown_output = document.export_to_markdown()
         # json_output = document.export_to_dict()
-        # text_output = document.export_to_text()
+        text_output = document.export_to_text()
 
         return jsonify({
-            "markdown": markdown_output
+            "markdown": markdown_output,
             # "json": json_output,
-            # "text": text_output
+            "text": text_output
         })
 
     except Exception as e:
