@@ -5,43 +5,42 @@ from docling.document_converter import DocumentConverter
 app = Flask(__name__)
 converter = DocumentConverter()
 
-UPLOAD_FOLDER = "uploads"
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Tạo thư mục nếu chưa có
+# UPLOAD_FOLDER = "uploads"
+# os.makedirs(UPLOAD_FOLDER, exist_ok=True) 
 
 @app.route("/convert", methods=["POST"])
 def convert_pdf():
-    if "file" not in request.files:
-        return jsonify({"error": "No file uploaded"}), 400
+    # if "file" not in request.files:
+    #     return jsonify({"error": "No file uploaded"}), 400
 
-    pdf_file = request.files["file"]
-    file_path = os.path.join(UPLOAD_FOLDER, pdf_file.filename)
+    pdf_file = request.form.get("file")
+    # file_path = os.path.join(UPLOAD_FOLDER, pdf_file.filename)
 
     # Lưu file vào thư mục tạm
-    pdf_file.save(file_path)
-
+    #pdf_file.save(file_path)
+    print(pdf_file)
     try:
         # Chuyển đổi PDF
-        result = converter.convert(file_path)
+        result = converter.convert(pdf_file)
         document = result.document
 
         # Xuất các định dạng
         markdown_output = document.export_to_markdown()
-        json_output = document.export_to_dict()
-        text_output = document.export_to_text()
+        # json_output = document.export_to_dict()
+        # text_output = document.export_to_text()
 
         return jsonify({
             "markdown": markdown_output,
-            "json": json_output,
-            "text": text_output
+            # "json": json_output,
+            # "text": text_output
         })
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-    finally:
         # Xóa file sau khi xử lý xong
-        if os.path.exists(file_path):
-            os.remove(file_path)
+        # if os.path.exists(file_path):
+        #     os.remove(file_path)
 
-# if __name__ == "__main__":
-#     app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)
