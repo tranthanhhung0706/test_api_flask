@@ -43,5 +43,5 @@ def convert_pdf():
         if os.path.exists(file_path):
             os.remove(file_path)
 
-if __name__ == "__main__":
-    app.run(debug=True)
+# if __name__ == "__main__":
+#     app.run(debug=True)
