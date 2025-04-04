@@ -290,5 +290,5 @@ XlsxWriter==3.2.2
 yarl==1.11.1
 zope.interface==5.4.
 # Procfile
-web: gunicorn api.index:app
+web: gunicorn main:app
 
